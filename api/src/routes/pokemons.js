@@ -39,6 +39,8 @@ const getApiInfo = async () => {
     }
 }
 
+
+
 //traigo la info de data base
 const getDbInfo = async () => {
     try{
@@ -67,5 +69,162 @@ const getAll = async () => {
     const allInfo = apiInfo.concat(dbInfo);
     return allInfo
 }
+
+//PARA RELACIONAR LAS TABLAS DE ID POKEMON Y ID DE TYPE
+router.post('/:pokemonId/type/:typeId', async (req, res, next) => {
+    try {
+        const {pokemonId, typeId} = req.params; // destructuring de datos que me pasan por parametros
+        const pokemon = await Pokemon.findByPk(pokemonId); // busco el pokemon por id
+        await pokemon.addType(typeId); // agrego el tipo al pokemon usando mixin de secualize
+        res.status(201).send(pokemon)
+    }
+    catch (error) {
+        next(error)
+    }       
+});
+
+router.get('/:id', async (req, res, next) => {
+    const {id} = req.params
+    let pokeId;
+   
+    if(id.length > 6) {
+        try {
+            const resDb= await Pokemon.findByPk(id, {include : Type})
+            pokeId = {
+                id: resDb.id,
+                name: resDb.name,
+                types: resDb.types.map(t => t),   
+                life: resDb.life,
+                attack: resDb.attack,
+                defense: resDb.defense,                   
+                speed: resDb.speed,
+                height: resDb.height,
+                weight: resDb.weight,
+                image: resDb.image,
+
+            }
+            res.json(pokeId)
+               
+        } catch (error) {
+            res.status(404).send({msg:'ID Pokemon not found'})
+        }
+                    
+    } 
+        else {
+            try {
+                const resPoke= await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
+                pokeId = {
+                    id: resPoke.data.id,
+                    name: resPoke.data.name,
+                    types: resPoke.data.types.map(t => t.type),
+                    life: resPoke.data.stats[0].base_stat,
+                    attack: resPoke.data.stats[1].base_stat,
+                    defense: resPoke.data.stats[2].base_stat,
+                    speed: resPoke.data.stats[5].base_stat,
+                    height: resPoke.data.height,
+                    weight: resPoke.data.weight,
+                    image: resPoke.data.sprites.other.dream_world.front_default,
+
+                }
+           
+                res.status(200).send(pokeId)
+            } 
+            catch (err) {
+                res.status(404).send({msg:'ID Pokemon not found'})
+            }
+        }
+})
+
+router.get('/', async(req,res)=>{
+    const {name}= req.query
+    try {
+        
+        if (name) {
+            const pokeBd = await Pokemon.findAll({
+                where: {
+                    name: name,
+                },
+                include: {
+                    model: Type,
+                },
+            })
+            if (pokeBd != 0) {
+                let respBd = pokeBd.map(p => {
+                    return {                        
+                        id: p.id,
+                        name: p.name,
+                        types: p.types.map(t => t),
+                        life: p.hp,
+                        attack: p.attack,
+                        defense: p.defense,                        
+                        speed: p.speed,
+                        height: p.height,
+                        weight: p.weight,
+                        image: p.image,
+                    }
+                })
+
+                res.status(200).send(respBd)            
+            } else {
+                const pokeApi = (await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`))
+                let respApi = [{
+                    id: pokeApi.data.id,
+                    name: pokeApi.data.name,
+                    types: pokeApi.data.types.map(t => t.type),
+                    life: pokeApi.data.stats[0].base_stat,
+                    attack: pokeApi.data.stats[1].base_stat,
+                    defense: pokeApi.data.stats[2].base_stat,
+                    speed: pokeApi.data.stats[5].base_stat,
+                    height: pokeApi.data.height,
+                    weight: pokeApi.data.weight,
+                    image: pokeApi.data.sprites.other.dream_world.front_default,
+                }]
+
+                res.status(200).send(respApi)
+            
+            }
+        } else {
+                          
+            try {
+                const allPoke = await getAllPokemon();
+                res.json(allPoke);
+            } 
+            catch (error) {
+                next(error);
+            }
+        }
+    }
+    catch (error) {
+        res.status(404).send({msg:"Pokemon's name not found"})
+    }
+  
+});
+
+
+
+//* PARA AGREGAR LOS POKEMON QUE CREO A LA BASE DE DATOS
+router.post('/', async (req, res, next) => {
+    try {
+        const {name, life, attack, defense, speed, height, weight, image, type} = req.body
+        const newPokemon = await Pokemon.create({
+            name: name.toLowerCase(),
+            type,
+            life,
+            attack,
+            defense,
+            speed,
+            height,
+            weight,
+            image,
+            
+        })
+
+        await newPokemon.setTypes(type);
+        res.send(newPokemon)
+
+    } catch (error) {
+        res.send(error.message)
+    }
+})
 
 module.exports = router;
