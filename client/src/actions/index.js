@@ -103,7 +103,7 @@ export function order(payload) {
     return async function (dispatch) {
         try {
             dispatch ({
-                type: 'ORDER',
+                type: 'FILTER_BY_ORDER',
                 payload,
             });
         }

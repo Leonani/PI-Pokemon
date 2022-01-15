@@ -86,7 +86,7 @@ function rootReducer(state = initialState, action) {
             
             };
         
-        case "ORDER":
+        case "FILTER_BY_ORDER":
             let orderPoke;
             if (action.payload === "asc") {
                 orderPoke = state.pokemons.sort(function (a, b) {
