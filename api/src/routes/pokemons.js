@@ -2,20 +2,21 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 const {Pokemon, Type, pokemon_type} = require('../db');
+// const {v4: uuidv4} = require('uuid');
 
 //peticion info de api pokemon
 const getApiInfo = async () => {
     try {
         //traigo la info de la url
-        const apiURL = (await axios('https://pokeapi.co/api/v2/pokemon/?limit=40')).data.results;
-        // console.log(apiURL.data.results, 'apiurl');
+        let apiURL = (await axios.get('https://pokeapi.co/api/v2/pokemon/?limit=40')).data.results;
+        // console.log(apiURL, 'apiurl');
         let pokeApi = [];
         for (let i = 0; i < apiURL.length; i++) {
-            pokeApi.push(axios(apiURL[i].url))
+            pokeApi.push(axios.get(apiURL[i].url))
         }
 
         //mapeo la info
-        const apiInfo = (await Promise.all(pokeApi)).map(p => 
+        let apiInfo = (await Promise.all(pokeApi)).map(p => 
             {
             return {
                 id: p.data.id,
@@ -27,15 +28,16 @@ const getApiInfo = async () => {
                 speed: p.data.stats[5].base_stat,
                 height: p.data.height,
                 weight: p.data.weight,
-                image: p.data.sprites.other.dream_world.front_default,
+                img: p.data.sprites.other.dream_world.front_default,
             }
         
         });
+        // console.log(apiInfo,'apiInfo')
         return apiInfo;
 
 
     } catch (err){
-        return [];
+        console.log(err)
     }
 }
 
@@ -100,7 +102,7 @@ router.get('/:id', async (req, res, next) => {
                 speed: resDb.speed,
                 height: resDb.height,
                 weight: resDb.weight,
-                image: resDb.image,
+                img: resDb.image,
 
             }
             res.json(pokeId)
@@ -123,7 +125,7 @@ router.get('/:id', async (req, res, next) => {
                     speed: resPoke.data.stats[5].base_stat,
                     height: resPoke.data.height,
                     weight: resPoke.data.weight,
-                    image: resPoke.data.sprites.other.dream_world.front_default,
+                    img: resPoke.data.sprites.other.dream_world.front_default,
 
                 }
            
@@ -160,7 +162,7 @@ router.get('/', async(req,res)=>{
                         speed: p.speed,
                         height: p.height,
                         weight: p.weight,
-                        image: p.image,
+                        img: p.image,
                     }
                 })
 
@@ -177,7 +179,7 @@ router.get('/', async(req,res)=>{
                     speed: pokeApi.data.stats[5].base_stat,
                     height: pokeApi.data.height,
                     weight: pokeApi.data.weight,
-                    image: pokeApi.data.sprites.other.dream_world.front_default,
+                    img: pokeApi.data.sprites.other.dream_world.front_default,
                 }]
 
                 res.status(200).send(respApi)
@@ -186,7 +188,7 @@ router.get('/', async(req,res)=>{
         } else {
                           
             try {
-                const allPoke = await getAllPokemon();
+                const allPoke = await getAll();
                 res.json(allPoke);
             } 
             catch (error) {
@@ -205,7 +207,8 @@ router.get('/', async(req,res)=>{
 //* PARA AGREGAR LOS POKEMON QUE CREO A LA BASE DE DATOS
 router.post('/', async (req, res, next) => {
     try {
-        const {name, life, attack, defense, speed, height, weight, image, type} = req.body
+        const {name, life, attack, defense, speed, height, weight, img, type} = req.body
+        // console.log(name)
         const newPokemon = await Pokemon.create({
             name: name.toLowerCase(),
             type,
@@ -215,7 +218,7 @@ router.post('/', async (req, res, next) => {
             speed,
             height,
             weight,
-            image,
+            img,
             
         })
 
