@@ -1,6 +1,7 @@
 import React from "react";
 import {Link} from 'react-router-dom';
-// import '../components/css/landing.css'
+import './CSS/landing.css'
+import logo from './img/pokemonLogo.png'
 
 export default function Landing() {
     return(
@@ -9,11 +10,9 @@ export default function Landing() {
             <Link className='btb' to = '/home'>
 
                 <button class='btLanding'>
-                    <div className='text'>
+                    <div className='img'>
 
-                        <h1>!!Bienvenido!!</h1>
-                        <h2>PI pokemon HENRY</h2>
-                        <p>Haz click para empezar!!</p>
+                        <img src={logo} alt="" />
 
                     </div>
                 </button>

@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 
 import "./CSS/home.css";
 import Card from './card'
+import Navbar from './navbar'
+import Footer from "./footer";
 
 
 export default function Home(){
@@ -118,69 +120,38 @@ export default function Home(){
 
 
     return (
-        <div>
-            <div className="container">
-                <input
-                id="formulario"
-                value={name}
-                type="text"
-                placeholder="Search pokemon..."
-                onChange={(e) => {
-                    handleInputChange(e);
-                }}
-                />
-                <button
-                type="submit"
-                onClick={(e) => {
-                    handleSubmit(e);
-                }}
-                >
-                Buscar
-                </button>
+        <div className="home">
+            <div>
+                <Navbar/>
             </div>
 
-            <div>
-                <Link to="/create">
-                <button>Pokemon Create</button>
-                </Link>
-            </div>
+            <div className="menus">
+            <div className="menu">
+                <div className="barraSearch">
+                    <input
+                    id="search"
+                    value={name}
+                    type="text"
+                    placeholder="Buscar Pokemon..."
+                    onChange={(e) => {
+                        handleInputChange(e);
+                    }}
+                    />
+                    <button
+                    className="bts"
+                    type="submit"
+                    onClick={(e) => {
+                        handleSubmit(e);
+                    }}
+                    >
+                        Buscar
+                    </button>
+                </div>
 
-            <div>
-                <select onChange={(event) => handleDbOrApi(event)}>
-                    <option>Created by</option>
-                    <option value="all">All</option>
-                    <option value="created">Created</option>
-                    <option value="api">Api</option>
-                </select>
-
-                <select onChange={(event) => handleOrder(event)}>
-                    <option>Order by Alpha</option>
-                    <option value="asc">A-Z</option> 
-                    <option value="desc">Z-A</option>
-                </select>
-
-                <select onChange={(event) => handleOrder(event)}>
-                    <option>Order by Attack</option>
-                    <option value="att-asc">Weak</option>
-                    <option value="att-desc">Strong</option>
-                </select>
-
-                <select onChange={(event) => handleFilterType(event)}>
-                    <option>Order by</option>
-                    {types &&
-                        types.map((type, index) => {
-                        return (
-                            <option key={index} value={type.name}>
-                            {type.name}
-                            </option>
-                        );
-                        })}
-                </select>
-
-                <div>
+                <div className="refresh">
                     <Link to="/pokemon"></Link>
                     <button
-                        className="button-reload"
+                        className="btr"
                         onClick={(event) => {
                         handleClick(event);
                         }}
@@ -189,7 +160,51 @@ export default function Home(){
                     </button>
                 </div>
 
-                <div className="card">
+                <div>
+                    <Link to="/create">
+                        <button className="btc">Add Pokemon</button>
+                    </Link>
+                </div>
+            </div>
+            </div>
+
+            <div>
+                <div className="filtros">
+                    <select onChange={(event) => handleDbOrApi(event)}>
+                        <option>Created by</option>
+                        <option value="all">All</option>
+                        <option value="created">Created</option>
+                        <option value="api">Api</option>
+                    </select>
+
+                    <select onChange={(event) => handleOrder(event)}>
+                        <option>Order by Alpha</option>
+                        <option value="asc">A-Z</option> 
+                        <option value="desc">Z-A</option>
+                    </select>
+
+                    <select onChange={(event) => handleOrder(event)}>
+                        <option>Order by Attack</option>
+                        <option value="att-asc">Weak</option>
+                        <option value="att-desc">Strong</option>
+                    </select>
+
+                    <select onChange={(event) => handleFilterType(event)}>
+                        <option>Order by</option>
+                        {types &&
+                            types.map((type, index) => {
+                            return (
+                                <option key={index} value={type.name}>
+                                {type.name}
+                                </option>
+                            );
+                            })}
+                    </select>
+                </div>          
+                
+                
+                <div className="backcards">           
+                <div className="cards">
                 {loading.loading ? (
                     <div className="loader-fader">
                         <div className="loader-container">
@@ -208,14 +223,18 @@ export default function Home(){
                     })
                 )}
                 </div>
-                <div>
-                    <button className="button-pagination" onClick={prevPage}>
+                </div> 
+                <div className="paginado">
+                    <button className="btp" onClick={prevPage}>
                         Prev
                     </button>
-                    <button className="button-pagination" onClick={nextPage}>
+                    <button className="btp" onClick={nextPage}>
                         Next
                     </button>
                 </div>            
+            </div>
+            <div className="foote">
+                <Footer/>
             </div>
         </div>
     );

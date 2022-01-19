@@ -1,0 +1,70 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.detailContainer{
+    width: 100%;
+    height: 625px;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+.detailContainer img{
+    width: 250px;
+    height: auto;
+    /* margin: 10px; */
+}
+
+.grid{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dividir{
+    height: 220px;
+    margin: 30px;
+    border: solid 2px black;
+    border-style: dotted;
+}
+
+.cuadro{
+    width: 500px;
+    height: auto;
+    padding: 10px;
+    background: url('../img/subtle-prism.svg');
+    border: solid 2px rgba(243, 210, 26, 0.699);;
+    border-radius: 15px;
+}
+
+.typeD{
+    margin-top: 20px;
+}
+
+.btback {
+    height: 35px;
+    width: 80px;
+    color: rgb(32, 32, 179);
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 10px;
+    background:  rgba(243, 210, 26, 0.699);
+    border: solid 2px rgb(32, 32, 179);
+}
+.btback:hover {
+    color: white;
+    background:  rgb(32, 32, 179);
+    border: solid 2px rgba(243, 210, 26, 0.699);
+    
+}
+
+.pokebola{
+    width: 320px;
+    height: auto;
+    position: absolute;
+    bottom: -60px;
+    right: -10px;
+}

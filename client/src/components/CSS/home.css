@@ -1,0 +1,109 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.home {
+    width:  100%;
+    height: auto;
+
+}
+.home .foote {
+   display: flex;
+   justify-content: center;
+}
+
+
+.cards{
+    width: auto;
+    height: auto;
+    margin: 20px;
+
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.menu{
+    width: 70%;
+
+    display: flex;
+    justify-content: center;
+}
+.menus{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.barraSearch{
+    margin: 10px;
+}
+.barraSearch input{
+    height: 25px;
+    padding:  0 0 0 5px;
+    background: rgba(243, 210, 26, 0.699);
+    border: solid 2px rgb(32, 32, 179);
+    border-radius: 10px 0 0 10px;
+    
+}
+.barraSearch .bts{
+    height: 29px;
+    width: 60px;
+    color: white;
+    background:  rgb(32, 32, 179);
+    border-radius: 0 10px 10px 0;
+    border: solid 2px rgba(243, 210, 26, 0.699);
+}
+
+.btc{
+    height: 30px;
+    width: 200px;
+    margin: 10px;
+    color: white;
+    background:  rgb(32, 32, 179);
+    border-radius: 10px;
+    border: solid 2px rgba(243, 210, 26, 0.699);
+}
+.refresh .btr{
+    height: 30px;
+    width: 100px;
+    margin: 10px;
+    color: white;
+    background:  rgb(32, 32, 179);
+    border-radius: 10px;
+    border: solid 2px rgba(243, 210, 26, 0.699);
+}
+.menu button:hover{
+    background:  rgba(243, 210, 26, 0.699);
+    border: solid 2px rgb(32, 32, 179);
+}
+
+.filtros select{
+    width: 150px;
+    height: 25px;
+    margin: 10px;
+    color: rgb(32, 32, 179);
+    font-weight: bold;
+    padding:  0 0 0 5px;
+    background: rgba(243, 210, 26, 0.699);
+    border: solid 2px rgba(243, 210, 26, 0.986);
+    border-radius: 10px
+}
+
+.paginado .btp{
+    width: 80px;
+    height: 25px;
+    margin: 5px;
+    padding:  0 0 0 5px;
+    color: aliceblue;
+    background:  rgb(32, 32, 179);
+    border: solid 2px rgba(243, 210, 26, 0.699);
+    border-radius: 10px
+}
+.paginado .btp:hover{
+    
+    background: rgba(243, 210, 26, 0.699);
+    border: solid 2px rgb(32, 32, 179);
+}

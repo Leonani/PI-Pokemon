@@ -1,0 +1,73 @@
+* {
+    margin: 0;
+    padding: 0;
+    
+}
+
+.conteinerNav {
+    display: flex;
+    justify-content: center;
+}
+
+.nav {
+    width: 90%;
+    height: 80px;
+    padding: 8px;
+    margin: 14px;
+    border: solid 3px  rgb(32, 32, 179);
+    background-color: rgba(243, 210, 26, 0.699);
+    border-radius: 45px;
+
+   
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.logo img {
+    height: 30px;
+    width: auto;
+}
+
+.title img{
+    height: 80px;
+    width: 300px;
+}
+
+.botoncitos ul{
+    display: flex;
+    flex-direction: row;    
+}
+.botoncitos li{
+    margin: 15px;
+    
+    font-size: 25px;    
+    list-style: none;   
+   
+}
+
+.botoncitos button {
+    color: black;
+    background-color: rgba(240, 248, 255, 0);
+    border: rgb(0, 0, 0);
+    font-family: 'Balsamiq Sans', cursive;
+    font-size: 20px;
+    
+}
+.botoncitos button:hover {
+    color: rgb(32, 32, 179);
+    font-weight: bold;
+    font-size: 23px;
+}
+.bth{
+    width: 85px; 
+    padding: 10px;
+    
+}
+.btc{
+    width: 175px;
+    padding: 10px;
+    
+}

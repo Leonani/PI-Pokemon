@@ -1,0 +1,16 @@
+.footer {
+    width: 20%;
+    height: auto;
+    padding: 8px;
+    margin: 20px;
+    
+    border: solid 3px  rgba(243, 210, 26, 0.918);
+    background-color: rgba(243, 210, 26, 0.699);
+    border-radius: 45px;
+
+}
+
+.footer a{
+    color: rgb(32, 32, 179);
+}
+
